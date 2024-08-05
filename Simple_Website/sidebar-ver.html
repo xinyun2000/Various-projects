@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+        <link href="sidebar-ver.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+        <title>Travel Map</title>
+    </head>
+    <body>
+        <!-- Sidebar -->
+        <div class="p-3 custom-sidebar">
+            <a class="d-flex pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom" style="margin-left: 10px;font-family:'Yu Mincho';">
+                <span class="fs-5 fw-semibold">愛知県観光スポット</span>
+            </a>
+            <ul class="list-unstyled ps-0" style="margin-left: 5px;">
+                <div class="mb-1" id="dongsan">
+                    <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#dongsanhe-collapse" aria-expanded="false">
+                        <strong style="font-family:'Yu Mincho';">東三河地方</strong>
+                    </button>
+                    <div class="collapse" id="dongsanhe-collapse" style="margin-left: 10px;font-family:'Yu Mincho'">
+                        <li class="mb-2" >
+                            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#fengen-collapse" aria-expanded="false">
+                                豊根村
+                            </button>
+                            <div class="collapse" id="fengen-collapse">
+                                <ul class="btn-toggle-nav list-unstyled align-items-center fw-normal pb-1 small">
+                                    <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="chajiushan" style="margin-left: 20px ;" onclick="moveToAttraction('茶臼山高原')">茶臼山高原</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="mb-2" >
+                            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="false">
+                                新城市
+                            </button>
+                            <div class="collapse" id="home-collapse">
+                                <ul class="btn-toggle-nav list-unstyled align-items-center fw-normal pb-1 small">
+                                    <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded" style="margin-left: 20px ;" onclick="moveToAttraction('四谷の千枚田')">四谷の千枚田</a></li>
+                                    <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded" style="margin-left: 20px ;" onclick="moveToAttraction('百間滝')">百間滝</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="mb-2" >
+                            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#tianyuan-collapse" aria-expanded="false">
+                                田原市
+                            </button>
+                            <div class="collapse" id="tianyuan-collapse">
+                                <ul class="btn-toggle-nav list-unstyled align-items-center fw-normal pb-1 small">
+                                    <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded" style="margin-left: 20px ;"  onclick="moveToAttraction('伊良湖岬灯台')">伊良湖岬灯台</a></li>
+                                    <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded" style="margin-left: 20px ;" onclick="moveToAttraction('恋路ヶ浜')">恋路ヶ浜</a></li>
+                                    <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded" style="margin-left: 20px ;" onclick="moveToAttraction('サンテパルクたはら')">サンテパルクたはら</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="mb-2" >
+                            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#pujun-collapse" aria-expanded="false">
+                                蒲郡市
+                            </button>
+                            <div class="collapse" id="pujun-collapse">
+                                <ul class="btn-toggle-nav list-unstyled align-items-center fw-normal pb-1 small">
+                                    <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded" style="margin-left: 20px ;" onclick="moveToAttraction('ラグーナテンボス')">ラグーナテンボス</a></li>
+                                    <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded" style="margin-left: 20px ;" onclick="moveToAttraction('竹島')">竹島</a></li>
+                                    <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded" style="margin-left: 20px ;" onclick="moveToAttraction('竹島ファンタジー館')">竹島ファンタジー館</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </div>
+                </div>
+                <div class="mb-1" id="xisan">
+                    <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#xisanhe-collapse" aria-expanded="false">
+                        <strong style="font-family:'Yu Mincho';">西三河地方</strong>
+                    </button>
+                    <div class="collapse" id="xisanhe-collapse" style="margin-left: 10px;font-family:'Yu Mincho'">
+                        <li class="mb-2" >
+                            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#fengtian-collapse" aria-expanded="false">
+                                豊田市
+                            </button>
+                            <div class="collapse" id="fengtian-collapse">
+                                <ul class="btn-toggle-nav list-unstyled align-items-center fw-normal pb-1 small">
+                                    <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded" style="margin-left: 20px ;" onclick="moveToAttraction('香嵐渓')">香嵐渓</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="mb-2" >
+                            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#Okazaki-collapse" aria-expanded="false">
+                                岡崎市
+                            </button>
+                            <div class="collapse" id="Okazaki-collapse">
+                                <ul class="btn-toggle-nav list-unstyled align-items-center fw-normal pb-1 small">
+                                    <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded" style="margin-left: 20px ;" onclick="moveToAttraction('岡崎城')">岡崎城</a></li>
+                                    <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded" style="margin-left: 20px ;" onclick="moveToAttraction('八丁味噌の郷')">八丁味噌の郷</a></li>
+                                    <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded" style="margin-left: 20px ;" onclick="moveToAttraction('岡崎公園')">岡崎公園</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="mb-2" >
+                            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#ancheng-collapse" aria-expanded="false">
+                                安城市
+                            </button>
+                            <div class="collapse" id="ancheng-collapse">
+                                <ul class="btn-toggle-nav list-unstyled align-items-center fw-normal pb-1 small">
+                                    <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded" style="margin-left: 20px ;" onclick="moveToAttraction('安城産業文化公園')">安城産業文化公園</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="mb-2" >
+                            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#xiwei-collapse" aria-expanded="false">
+                                西尾市
+                            </button>
+                            <div class="collapse" id="xiwei-collapse">
+                                <ul class="btn-toggle-nav list-unstyled align-items-center fw-normal pb-1 small">
+                                    <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded" style="margin-left: 20px ;" onclick="moveToAttraction('佐久島')">佐久島</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </div>
+                </div>
+                <div class="mb-1" id="weizhang">
+                    <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#weizhang-collapse" aria-expanded="false">
+                        <strong style="font-family:'Yu Mincho';">尾張地方</strong>
+                    </button>
+                    <div class="collapse" id="weizhang-collapse" style="margin-left: 10px;font-family:'Yu Mincho'">
+                        <li class="mb-2" >
+                            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#changjiu-collapse" aria-expanded="false">
+                                長久手市
+                            </button>
+                            <div class="collapse" id="changjiu-collapse">
+                                <ul class="btn-toggle-nav list-unstyled align-items-center fw-normal pb-1 small">
+                                    <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded" style="margin-left: 20px ;" onclick="moveToAttraction('愛・地球博記念公園（モリコロパーク）')">愛・地球博記念公園（モリコロパーク）</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="mb-2" >
+                            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#quanshan-collapse" aria-expanded="false">
+                                犬山市
+                            </button>
+                            <div class="collapse" id="quanshan-collapse">
+                                <ul class="btn-toggle-nav list-unstyled align-items-center fw-normal pb-1 small">
+                                    <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded" style="margin-left: 20px ;" onclick="moveToAttraction('犬山城')">犬山城</a></li>
+                                    <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded" style="margin-left: 20px ;" onclick="moveToAttraction('日本モンキーパーク')">日本モンキーパーク</a></li>
+                                    <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded" style="margin-left: 20px ;" onclick="moveToAttraction('リトルワールド')">リトルワールド</a></li>
+                                    <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded" style="margin-left: 20px ;" onclick="moveToAttraction('博物館明治村')">博物館明治村</a></li>
+                                    <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded" style="margin-left: 20px ;" onclick="moveToAttraction('お菓子の城')">お菓子の城</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="mb-2" >
+                            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#yigong-collapse" aria-expanded="false">
+                                一宮市
+                            </button>
+                            <div class="collapse" id="yigong-collapse">
+                                <ul class="btn-toggle-nav list-unstyled align-items-center fw-normal pb-1 small">
+                                    <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded" style="margin-left: 20px ;" onclick="moveToAttraction('国営木曽三川公園138タワーパーク')">国営木曽三川公園138タワーパーク</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="mb-2" >
+                            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#nagoya-collapse" aria-expanded="false">
+                                名古屋市
+                            </button>
+                            <div class="collapse" id="nagoya-collapse">
+                                <ul class="btn-toggle-nav list-unstyled align-items-center fw-normal pb-1 small">
+                                    <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded" style="margin-left: 20px ;" onclick="moveToAttraction('名古屋城')">名古屋城</a></li>
+                                    <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded" style="margin-left: 20px ;" onclick="moveToAttraction('名古屋港水族館')">名古屋港水族館</a></li>
+                                    <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded" style="margin-left: 20px ;" onclick="moveToAttraction('リニア・鉄道館')">リニア・鉄道館</a></li>
+                                    <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded" style="margin-left: 20px ;" onclick="moveToAttraction('徳川園')">徳川園</a></li>
+                                    <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded" style="margin-left: 20px ;" onclick="moveToAttraction('金シャチ横丁')">金シャチ横丁</a></li>
+                                    <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded" style="margin-left: 20px ;" onclick="moveToAttraction('中部電力 MIRAI TOWER')">中部電力 MIRAI TOWER</a></li>
+                                    <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded" style="margin-left: 20px ;" onclick="moveToAttraction('ノリタケの森')">ノリタケの森</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </div>
+                </div>       
+            </ul>
+        </div>
+        <!-- Map -->
+        <div id="mapid"></div>
+        <!-- BottomPopup -->
+        <div id="bottomPopup" class="bottom-popup"></div>
+        
+        <script src="sidebar-ver.js"></script>
+    </body>
+    <!-- 観光スポットの情報参考：「定番から穴場まで！愛知県のおすすめ観光スポット43選」https://www.nta.co.jp/media/tripa/articles/ydyBv-->
+</html>
